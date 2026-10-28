@@ -1,0 +1,15 @@
+services:
+  vouchwall:
+    build: .
+    ports:
+      - "3080:3080"
+    environment:
+      # Public address used in share links and embed snippets, e.g. https://proof.example.com
+      VOUCHWALL_PUBLIC_URL: ${VOUCHWALL_PUBLIC_URL:-}
+      # Optional: set your own admin token instead of the generated one
+      VOUCHWALL_ADMIN_TOKEN: ${VOUCHWALL_ADMIN_TOKEN:-}
+    volumes:
+      - vouchwall-data:/data
+    restart: unless-stopped
+volumes:
+  vouchwall-data:

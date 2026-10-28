@@ -1,0 +1,11 @@
+{
+  "name": "vouchwall",
+  "owner": { "name": "Dhaval Rana" },
+  "plugins": [
+    {
+      "name": "vouchwall",
+      "source": "./",
+      "description": "Self-hosted testimonials (Senja / Testimonial.to alternative) with Claude skills to request, curate and repurpose social proof."
+    }
+  ]
+}

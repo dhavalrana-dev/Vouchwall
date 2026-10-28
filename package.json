@@ -1,0 +1,16 @@
+{
+  "name": "vouchwall",
+  "version": "0.1.0",
+  "description": "Self-hosted, open-source alternative to Senja and Testimonial.to: collect text and video testimonials, embed a Wall of Love, and manage it all from Claude via MCP.",
+  "type": "module",
+  "bin": { "vouchwall": "server/index.mjs", "vouchwall-mcp": "mcp/server.mjs" },
+  "scripts": {
+    "start": "node server/index.mjs",
+    "mcp": "node mcp/server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT",
+  "author": "Dhaval Rana",
+  "keywords": ["testimonials", "social-proof", "wall-of-love", "senja", "testimonial.to", "self-hosted", "mcp", "claude", "claude-code"]
+}
