@@ -171,7 +171,7 @@ export class Store {
       subtitle: input.subtitle || "",
       layout: ["grid", "carousel", "list"].includes(input.layout) ? input.layout : "grid",
       theme: ["light", "dark", "auto"].includes(input.theme) ? input.theme : "auto",
-      filter: normFilter(input.filter),
+      filter: this.resolveForms(normFilter(input.filter)),
       created_at: new Date().toISOString(),
     };
     this.db.walls.push(wall);
@@ -185,9 +185,16 @@ export class Store {
     for (const k of ["title", "subtitle"]) if (typeof patch[k] === "string") wall[k] = patch[k];
     if (["grid", "carousel", "list"].includes(patch.layout)) wall.layout = patch.layout;
     if (["light", "dark", "auto"].includes(patch.theme)) wall.theme = patch.theme;
-    if (patch.filter) wall.filter = normFilter(patch.filter);
+    // Merge, so changing one filter field doesn't reset the others.
+    if (patch.filter) wall.filter = this.resolveForms(normFilter({ ...wall.filter, ...patch.filter }));
     this.save();
     return wall;
+  }
+
+  // Walls filter on form ids; accept slugs too, since that's what people see.
+  resolveForms(filter) {
+    filter.form_ids = filter.form_ids.map((ref) => this.form(ref)?.id || ref);
+    return filter;
   }
 
   // Only approved testimonials ever reach a wall.

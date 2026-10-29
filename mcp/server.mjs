@@ -23,6 +23,7 @@ async function api(method, path, body) {
     throw new Error(`Can't reach Vouchwall at ${BASE} (${err.cause?.code || err.message}). Is the server running? Set VOUCHWALL_URL if it lives elsewhere.`);
   }
   const data = await res.json().catch(() => ({}));
+  if (res.status === 401) throw new Error(`Vouchwall at ${BASE} rejected VOUCHWALL_TOKEN. It must match the admin token in the server's data/admin-token file.`);
   if (!res.ok) throw new Error(data.error || `${method} ${path} failed with ${res.status}`);
   return data;
 }
@@ -38,6 +39,34 @@ const qs = (obj) => {
 const redact = (t, includeEmail) => {
   const { email, ...rest } = t;
   return includeEmail ? t : { ...rest, has_email: Boolean(email) };
+};
+
+// A highlight must be the customer's own words. Segments split by an ellipsis may be
+// trimmed apart, but each one has to appear in the testimonial as written.
+const norm = (s) => String(s || "").toLowerCase().replace(/[“”]/g, '"').replace(/[‘’]/g, "'").replace(/\s+/g, " ").trim();
+function highlightProblem(t) {
+  if (!t.highlight) return null;
+  const source = norm([t.text, t.transcript, ...Object.values(t.answers || {})].join(" \n "));
+  const missing = t.highlight
+    .split(/…|\.\.\./)
+    .map((s) => norm(s).replace(/^["'\s]+|["'\s]+$/g, ""))
+    .filter(Boolean)
+    .filter((seg) => !source.includes(seg));
+  return missing.length
+    ? `Highlight is not verbatim: "${missing[0]}" does not appear in the testimonial. Use the customer's exact words, or clear it with highlight: null.`
+    : null;
+}
+
+const WALL_FILTER = {
+  type: "object",
+  properties: {
+    tags: { type: "array", items: { type: "string" }, description: "Show testimonials with any of these tags" },
+    form_ids: { type: "array", items: { type: "string" }, description: "Form ids or slugs" },
+    min_rating: { type: "number" },
+    featured_only: { type: "boolean" },
+    type: { type: "string", enum: ["text", "video"] },
+    limit: { type: "number" },
+  },
 };
 
 const FILTER_PROPS = {
@@ -94,7 +123,8 @@ const tools = {
     },
     async run({ id, ...patch }) {
       const { testimonial } = await api("PATCH", `testimonials/${encodeURIComponent(id)}`, patch);
-      return redact(testimonial, false);
+      const problem = patch.highlight ? highlightProblem(testimonial) : null;
+      return problem ? { ...redact(testimonial, false), warnings: [problem] } : redact(testimonial, false);
     },
   },
 
@@ -203,17 +233,7 @@ const tools = {
         subtitle: { type: "string" },
         layout: { type: "string", enum: ["grid", "carousel", "list"] },
         theme: { type: "string", enum: ["auto", "light", "dark"] },
-        filter: {
-          type: "object",
-          properties: {
-            tags: { type: "array", items: { type: "string" }, description: "Show testimonials with any of these tags" },
-            form_ids: { type: "array", items: { type: "string" } },
-            min_rating: { type: "number" },
-            featured_only: { type: "boolean" },
-            type: { type: "string", enum: ["text", "video"] },
-            limit: { type: "number" },
-          },
-        },
+        filter: WALL_FILTER,
       },
       required: ["title"],
     },
@@ -221,7 +241,7 @@ const tools = {
   },
 
   update_wall: {
-    description: "Change a wall's title, layout, theme or filter.",
+    description: "Change a wall's title, layout, theme or filter. Filter fields you pass are merged into the current filter.",
     inputSchema: {
       type: "object",
       properties: {
@@ -230,7 +250,7 @@ const tools = {
         subtitle: { type: "string" },
         layout: { type: "string", enum: ["grid", "carousel", "list"] },
         theme: { type: "string", enum: ["auto", "light", "dark"] },
-        filter: { type: "object" },
+        filter: WALL_FILTER,
       },
       required: ["id"],
     },

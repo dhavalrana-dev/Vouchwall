@@ -166,6 +166,9 @@ export function createApp({ dataDir, adminToken, publicUrl } = {}) {
         if (method === "POST" && !id) {
           const body = await readJson(req, 64 * 1024);
           if (!body.name || !(body.text || body.transcript)) return json(res, 400, { error: "name and text are required" });
+          if (body.status === "approved" && !body.consent) {
+            return json(res, 409, { error: "Can't import as approved without consent: true. Import as pending, or confirm you have permission to publish it." });
+          }
           const t = store.addTestimonial({
             ...pick(body, ["name", "email", "title", "company", "rating", "text", "transcript", "highlight", "tags", "featured", "source_url", "created_at"]),
             form_id: body.form ? store.form(body.form)?.id || null : null,

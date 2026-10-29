@@ -20,7 +20,8 @@ The `vouchwall` MCP server talks to that instance's admin API.
 
 ## First run
 
-If tools fail with "Can't reach Vouchwall" or "VOUCHWALL_TOKEN is not set", walk the user through setup:
+If tools fail with "Can't reach Vouchwall", "VOUCHWALL_TOKEN is not set" or "rejected
+VOUCHWALL_TOKEN", walk the user through setup:
 
 1. Start the server from the cloned repo: `npm start` (Node 20+) or `docker compose up -d` (see README).
 2. Copy the admin token printed on first start (also saved in `data/admin-token`).

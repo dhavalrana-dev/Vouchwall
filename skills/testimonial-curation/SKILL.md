@@ -19,6 +19,8 @@ description: Review and organize testimonials in Vouchwall, including the pendin
 5. Suggest **featured** for the 1–3 most specific, credible ones (full name + role + concrete result).
 
 Show it all as a table and apply with `update_testimonial` **only after the user agrees**.
+If the result has `warnings` (a highlight that isn't verbatim), fix the highlight to the
+customer's exact words and update again.
 
 ## Video testimonials
 
