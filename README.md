@@ -159,7 +159,18 @@ npm test
 ```
 
 The tests start a real server and drive it over HTTP. They also run the MCP server over stdio
-against it, the same way Claude does.
+against it, the same way Claude does. `test/skills.test.mjs` walks each skill's workflow through the MCP tools.
+
+### Live skill check (uses your Claude account)
+
+```bash
+node test/live/scenarios.mjs
+```
+
+This runs six real requests through Claude Code (`claude -p`) with the plugin loaded, each one against a fresh
+seeded instance. It checks that the right skill fires and that Claude behaves correctly: quotes stay
+verbatim, nothing is published without permission, and emails don't leak. Pass `--claude <path>` if
+`claude` isn't on your PATH, or pass scenario names to run only some of them.
 
 ## Roadmap
 

@@ -1,6 +1,6 @@
 ---
 name: testimonial-repurpose
-description: Turn approved Vouchwall testimonials into marketing assets like landing-page proof sections, social posts and carousels, ad copy, email snippets, sales one-pagers, case study drafts and Wall of Love embeds. Use when the user says "use my testimonials", "add social proof to this page", "make a post from this review", "testimonial carousel", "case study from this customer", "proof for my ads", "best quotes for the homepage", or "embed testimonials on my site".
+description: Turn approved Vouchwall testimonials into marketing copy and assets like social proof sections for homepage, pricing and landing pages, social posts and carousels, ad copy, email snippets, sales one-pagers, case study drafts and Wall of Love embeds. Use whenever copy should quote or draw on the user's testimonials, reviews or customer quotes, e.g. "write a social proof section", "testimonials for my pricing page", "use my testimonials", "make a post from this review", "testimonial carousel", "case study from this customer", "proof for my ads", "best quotes for the homepage", or "embed testimonials on my site".
 ---
 
 # Repurpose testimonials

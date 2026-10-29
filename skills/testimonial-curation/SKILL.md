@@ -1,6 +1,6 @@
 ---
 name: testimonial-curation
-description: Review and organize testimonials in Vouchwall, including the pending inbox, approve/reject suggestions, tags by theme, verbatim highlights, video transcripts, and bulk import from emails, review sites, LinkedIn, X or Slack. Use when the user says "review my testimonials", "what came in", "approve these", "tag my testimonials", "pick the best quotes", "import my reviews", "add these testimonials", or "transcribe this video testimonial".
+description: Review, organize and add testimonials in Vouchwall, including the pending inbox, approve/reject suggestions, tags by theme, verbatim highlights, video transcripts, and importing praise from emails, review sites, LinkedIn, X, Slack or DMs (with the permission check before publishing). Use whenever the user wants to add, save or publish a testimonial, review or kind words someone sent them, e.g. "a client emailed me this", "add this review", "put this on my wall", "save this feedback", "import my G2 reviews", or to manage what came in, e.g. "review my testimonials", "approve these", "tag my testimonials", "pick the best quotes", "transcribe this video testimonial".
 ---
 
 # Curate testimonials
