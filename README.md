@@ -34,11 +34,11 @@ case studies.
 ## Run the server
 
 ```bash
-git clone https://github.com/YOUR-GITHUB-USER/vouchwall.git
+git clone https://github.com/dhavalrana-dev/Vouchwall.git
 ```
 
 ```bash
-cd vouchwall && npm start
+cd Vouchwall && npm start
 ```
 
 Open http://localhost:3080/admin. The **admin token** is printed on first start and saved to
@@ -70,7 +70,7 @@ The second command shows the generated admin token. Put it behind any HTTPS reve
 ### Claude Code (plugin: MCP server + skills)
 
 ```bash
-/plugin marketplace add YOUR-GITHUB-USER/vouchwall
+/plugin marketplace add dhavalrana-dev/Vouchwall
 ```
 
 ```bash
