@@ -1,6 +1,9 @@
 {
   "name": "vouchwall",
-  "owner": { "name": "Dhaval Rana" },
+  "owner": {
+    "name": "Dhaval Rana"
+  },
+  "description": "Vouchwall: self-hosted testimonials (open-source Senja / Testimonial.to alternative) with Claude skills and an MCP server.",
   "plugins": [
     {
       "name": "vouchwall",

@@ -2,7 +2,29 @@
   "name": "vouchwall",
   "version": "0.1.0",
   "description": "Open-source alternative to Senja and Testimonial.to. Claude asks customers for testimonials, reviews and tags what comes in, and turns approved ones into landing-page proof, posts, ads and case studies. Self-hosted Wall of Love included.",
-  "author": { "name": "Dhaval Rana" },
+  "author": {
+    "name": "Dhaval Rana"
+  },
   "license": "MIT",
-  "keywords": ["testimonials", "social-proof", "wall-of-love", "reviews", "senja-alternative", "marketing", "mcp"]
+  "keywords": [
+    "testimonials",
+    "social-proof",
+    "wall-of-love",
+    "reviews",
+    "senja-alternative",
+    "marketing",
+    "mcp"
+  ],
+  "mcpServers": {
+    "vouchwall": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/server.mjs"
+      ],
+      "env": {
+        "VOUCHWALL_URL": "${VOUCHWALL_URL:-http://localhost:3080}",
+        "VOUCHWALL_TOKEN": "${VOUCHWALL_TOKEN:-}"
+      }
+    }
+  }
 }
